@@ -24,7 +24,7 @@ class GlacierVault:
     """
     archive_id = self.vault.upload_archive(filepath, description=description)
 
-    shelf = shelve.open(self.shelve_file)
+    shelf = shelve.open(self.shelve_file, writeback=True)
     if not 'archives' in shelf:
       shelf['archives'] = dict()
     shelf['archives'][description] = archive_id
