@@ -9,6 +9,6 @@ secret_key=30
 
 [MySQL]
 mysql_host=localhost
-mysql_db=bni_newspapers
-mysql_user=newspaper_worker
-mysql_pw=seal0)Echlin
+mysql_db=
+mysql_user=
+mysql_pw=
