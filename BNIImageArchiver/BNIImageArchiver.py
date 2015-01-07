@@ -1,4 +1,4 @@
-from GlacierVault import GlacierShelve, GlacierVault
+from GlacierVault import GlacierVault
 import os
 
 
@@ -11,20 +11,17 @@ class BNIImageArchiver(object):
         self.vault_name = vault_name
         self.relative_filepath = relative_filepath
         self.archive_description = "".join([c for c in relative_filepath if c.isalpha() or c.isdigit() or c == ' ']).rstrip()
+        print self.archive_description
 
     def archive_file(self):
-        if not self.is_file_already_archived():
-            vault = GlacierVault.GlacierVault(
+      vault = GlacierVault.GlacierVault(
                 self.vault_name,
                 self.auth_id,
                 self.auth_key,
                 self.shelf_file)
+       
+       if not vault.is_file_already_archived(self.archive_description):
             vault.upload(os.path.join(self.root_dir, self.relative_filepath), self.archive_description)
-
-    def is_file_already_archived(self):
-        with GlacierShelve.GlacierShelve(self.shelf_file) as d:
-            if not 'archives' in d:
-                return False
-            if self.archive_description in d['archives']:
-                return True
-        return False
+            print "File archived"
+       else:
+            print "File already archived!"
